@@ -1,10 +1,11 @@
 import koa from 'koa';
+import cors from 'kcors';
 import koaRouter from 'koa-router';
 import koaBody from 'koa-bodyparser';
 import {graphqlKoa, graphiqlKoa} from 'graphql-server-koa';
 
 import './data/db';
-import schema from './data/schema';
+import { schema } from './data/schema';
 
 const app = new koa();
 const router = new koaRouter();
@@ -13,9 +14,12 @@ const PORT = 3001;
 // koaBody is needed just for POST.
 app.use(koaBody());
 
+// Allow cors
+app.use(cors());
+
 // POST and GET requests will be redirected to GraphQL schema
-router.post('/graphql', graphqlKoa({schema: schema}));
-router.get('/graphql', graphqlKoa({schema: schema}));
+router.post('/graphql', graphqlKoa({ schema: schema }));
+router.get('/graphql', graphqlKoa({ schema: schema }));
 
 
 router.get('/graphiql', graphiqlKoa({endpointURL: '/graphql'}));

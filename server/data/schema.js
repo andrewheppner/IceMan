@@ -1,15 +1,20 @@
 import {
-    GraphQLObjectType,
-    GraphQLSchema
-} from 'graphql';
-// import queries and mutations from user folder
-import IngredientQueries from './ingredient/queries'
+  makeExecutableSchema,
+  addMockFunctionsToSchema,
+} from 'graphql-tools';
+import { resolvers } from './resolvers';
 
-// creating GraphQL schema with parameters
-// each parameter can only take one GraphQLObjectType
-export default new GraphQLSchema({
-    query: new GraphQLObjectType({
-        name: 'Query',      // arbitrary name for library API
-        fields: IngredientQueries // connect fields from queries.js
-    }),
-});
+const typeDefs = `
+
+	type Ingredient {
+		id: ID!
+		description: String
+	}
+
+	type Query {
+		ingredients: [Ingredient]
+	}
+`;
+
+const schema = makeExecutableSchema({ typeDefs, resolvers });
+export { schema };

@@ -17,7 +17,7 @@ const IngredientInput = ({ data: {loading, error, ingredients }}) => {
  };
 
 const IngredientsListQuery = gql`
-	query IngredientsListQuery {
+	query {
 		ingredients {
 			id
 			description
